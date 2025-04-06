@@ -34,29 +34,28 @@ func calculate(_ args: [String]) -> Int {
     let lastElem = args.last
     let numElem = args.count - 1
     
-    // Handle special commands: count, avg, fact
-    if let lastArg = args.last {
-        switch lastArg {
-        case "count":
-            return args.dropLast().count
-        case "avg":
-            let numbers = args.dropLast().compactMap { Int($0) }
-            guard numbers.count > 0 else { return 0 }
-            return numbers.reduce(0, +) / numbers.count
-        case "fact":
-            let num = Int(args[0])
-            if num == 0 {return 1}
-            var prod = 1
-            for i in 1...num! {
-                prod *= i
-            }
-            return prod;
-        default:
-            break
+    // count, avg, fact
+    switch lastElem {
+    case "count": return numElem
+    case "avg":
+        var sum = 0
+        for i in 0...numElem {
+            sum += Int(args[i]) ?? 0
         }
+        return (sum == 0) ? 0 : (sum / numElem)
+    case "fact":
+        let num = Int(args[0])
+        if num == 0 {return 1}
+        var prod = 1
+        for i in 1...num! {
+            prod *= i
+        }
+        return prod;
+    default:
+        break
     }
 
-    // Handle arithmetic operations
+    // + - * / %
     if args.count == 3, let firstNum = Int(args[0]), let secondNum = Int(args[2]) {
         switch args[1] {
         case "+": return firstNum + secondNum
