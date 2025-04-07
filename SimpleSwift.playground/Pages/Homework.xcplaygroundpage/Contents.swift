@@ -36,34 +36,21 @@ func calculate(_ args: [String]) -> Int {
     
     // count, avg, fact
     switch lastElem {
-    case "count": return numElem
-    case "avg":
-        var sum = 0
-        for i in 0...numElem {
-            sum += Int(args[i]) ?? 0
-        }
-        return (sum == 0) ? 0 : (sum / numElem)
-    case "fact":
-        let num = Int(args[0])
-        if num == 0 {return 1}
-        var prod = 1
-        for i in 1...num! {
-            prod *= i
-        }
-        return prod;
-    default:
-        break
+        case "count": return numElem
+        case "avg": return avg(args, numElem: numElem)
+        case "fact": return fact(args)
+        default: break
     }
 
     // + - * / %
     if args.count == 3, let firstNum = Int(args[0]), let secondNum = Int(args[2]) {
         switch args[1] {
-        case "+": return firstNum + secondNum
-        case "-": return firstNum - secondNum
-        case "*": return firstNum * secondNum
-        case "/": return secondNum != 0 ? firstNum / secondNum : 0
-        case "%": return secondNum != 0 ? firstNum % secondNum : 0
-        default: return 0
+            case "+": return firstNum + secondNum
+            case "-": return firstNum - secondNum
+            case "*": return firstNum * secondNum
+            case "/": return secondNum != 0 ? firstNum / secondNum : 0
+            case "%": return secondNum != 0 ? firstNum % secondNum : 0
+            default: return 0
         }
     }
     
@@ -77,6 +64,26 @@ func calculate(_ arg: String) -> Int {
     return calculate(array)
 }
 
+// Helper function for average
+func avg(_ args: [String], numElem: Int) -> Int {
+    var sum = 0
+    let numElem = args.count-1
+    for i in 0...numElem {
+        sum += Int(args[i]) ?? 0
+    }
+    return (sum == 0) ? 0 : (sum / numElem)
+}
+
+// Helper function for factorial
+func fact(_ args: [String]) -> Int {
+    let num = Int(args[0])
+    if num == 0 {return 1}
+    var prod = 1
+    for i in 1...num! {
+        prod *= i
+    }
+    return prod;
+}
 //: Below this are the test expressions/calls to verify if your code is correct.
 //:
 //: ***DO NOT MODIFY ANYTHING BELOW THIS***
